@@ -25,9 +25,9 @@ else
 		@foreach(var file in Model.FileHandles)
 		{
 			<tr>
-				<th scope="row">@file.FileName</th>
-				<th scope="row">@file.BlockCount</th>
-				<th scope="row"><a asp-controller="Files" asp-action="Index" asp-route-id="@file.Id">View...</a></th>
+				<th scope="row" class="align-middle">@file.FileName</th>
+				<th scope="row" class="align-middle">@file.BlockCount</th>
+				<th scope="row" class="align-middle"><a asp-controller="Files" asp-action="Index" asp-route-id="@file.Id" class="btn btn-primary">View...</a></th>
 			</tr>
 		}
 		</tbody>
