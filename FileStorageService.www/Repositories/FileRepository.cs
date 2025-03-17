@@ -5,10 +5,10 @@ namespace FileStorageService.www.Repositories;
 
 public class FileRepository(ApplicationDbContext context)
 {
-	private const int MAX_BLOCKS = 1024;
+	public static readonly int MAX_BLOCKS = 10_485_760;
 	
-	private Queue<(string, Stream)> creationQueue = new();
-	private Lock countLock = new();
+	private readonly Queue<(string, Stream)> creationQueue = new();
+	private readonly Lock countLock = new();
 	
 	public async Task<List<FileHandle>> GetAllFilesAsync()
 	{

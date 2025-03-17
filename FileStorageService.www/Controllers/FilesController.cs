@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using FileStorageService.www.Atttributes;
 using FileStorageService.www.Data;
 using FileStorageService.www.Models;
 using FileStorageService.www.Repositories;
@@ -12,6 +13,8 @@ public class FilesController(
 	ApplicationDbContext context,
 	FileRepository fileRepository) : Controller
 {
+	private const long MaxFileSize = 7L * 1024L * 1024L * 1024L;
+	
 	// GET
 	public async Task<IActionResult> Index(Guid? id)
 	{
@@ -62,6 +65,9 @@ public class FilesController(
 	}
 
 	[HttpPost]
+	[DisableFormValueModelBinding]
+	[RequestSizeLimit(MaxFileSize)]
+	[RequestFormLimits(MultipartBodyLengthLimit = MaxFileSize)]
 	public async Task<IActionResult> New(NewFileModel model)
 	{
 		if (!ModelState.IsValid)
