@@ -1,6 +1,8 @@
+using FileStorageService.www;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using FileStorageService.www.Data;
+using FileStorageService.www.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<FileRepository>();
 
 
 var app = builder.Build();

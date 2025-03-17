@@ -1,45 +1,46 @@
 using System.Diagnostics.CodeAnalysis;
 using FileStorageService.www.Data;
 using FileStorageService.www.Models;
+using FileStorageService.www.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileStorageService.www.Controllers;
 
-public class FilesController(ApplicationDbContext context) : Controller
+public class FilesController(
+	ApplicationDbContext context,
+	FileRepository fileRepository) : Controller
 {
 	// GET
 	public async Task<IActionResult> Index(Guid? id)
 	{
-		if (id != null)
+		if (id is not null)
 		{
-			return await ViewSingleFile(id);
+			return await ViewSingleFile((Guid)id);
 		}
-		
-		var handles = await context.FileHandles
-			.Include(e => e.FileBlocks)
-			.Select(e => new FileHandleModel
+
+		var fileHandles = await fileRepository.GetAllFilesAsync();
+
+		var handles = fileHandles.Select(e => new FileHandleModel
 			{
 				FileName = e.Name,
 				BlockCount = e.FileBlocks.Count,
 				Id = e.Id,
 			})
-			.ToListAsync();
+			.ToList();
 
 		var model = new FileHandleListModel
 		{
 			FileHandles = handles
 		};
-		
+
 		return View(model);
 	}
 
-	private async Task<IActionResult> ViewSingleFile([DisallowNull] Guid? id)
+	private async Task<IActionResult> ViewSingleFile(Guid id)
 	{
-		var fileHandle = await context.FileHandles
-			.Include(e => e.FileBlocks)
-			.FirstAsync(e => e.Id ==id);
+		var fileHandle = await fileRepository.GetFileAsync(id);
 
 		var model = new FileHandleModel
 		{
@@ -68,40 +69,20 @@ public class FilesController(ApplicationDbContext context) : Controller
 			return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
 		}
 
-		var handle = new FileHandle
-		{
-			Name = model.Name
-		};
-		context.Add(handle);
+		var name = model.Name;
+		var stream = model.FileContents.OpenReadStream();
 		
-		var readStream = model.FileContents.OpenReadStream();
-		
-		await CreateFileBlocks(handle, readStream);
-		
-		await context.SaveChangesAsync();
-		
-		return RedirectToAction("Index", "Files", new{ id = handle.Id});
+		var fileHandleId = await fileRepository.TryNewFileAsync(name, stream);
+
+		if (fileHandleId != null)
+			return RedirectToAction("Index", "Files", new { id = fileHandleId });
+
+		return RedirectToAction("NotEnoughSpace");
 	}
 
-	private async Task CreateFileBlocks(FileHandle fileHandle, Stream reader)
+	public IActionResult NotEnoughSpace()
 	{
-
-		var blockNumber = 0;
-		
-		var buffer = new byte[1024];
-
-		while (await reader.ReadAsync(buffer) > 0)
-		{
-			var block = new FileBlock
-			{
-				BlockNumber = blockNumber++,
-				Data = buffer,
-				FileHandle = fileHandle
-			};
-
-			// context.Add(block);
-
-			fileHandle.FileBlocks.Add(block);
-		}
+		return View();
 	}
+	
 }
