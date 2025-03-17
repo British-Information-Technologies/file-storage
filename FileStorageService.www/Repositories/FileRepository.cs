@@ -7,8 +7,8 @@ public class FileRepository(ApplicationDbContext context)
 {
 	public static readonly int MAX_BLOCKS = 10_485_760;
 	
-	private readonly Queue<(string, Stream)> creationQueue = new();
-	private readonly Lock countLock = new();
+	private readonly Queue<(string, Stream)> _creationQueue = new();
+	private readonly Lock _countLock = new();
 	
 	public async Task<List<FileHandle>> GetAllFilesAsync()
 	{
@@ -26,9 +26,9 @@ public class FileRepository(ApplicationDbContext context)
 	{
 		var tcs = new TaskCompletionSource<Guid?>();
 
-		lock (creationQueue)
+		lock (_creationQueue)
 		{
-			creationQueue.Enqueue((name, reader));
+			_creationQueue.Enqueue((name, reader));
 		}
 
 		Task.Run(async () =>
@@ -37,9 +37,9 @@ public class FileRepository(ApplicationDbContext context)
 			Stream stream;
 			string name;
 			
-			lock (creationQueue)
+			lock (_creationQueue)
 			{
-				(name, stream) = creationQueue.Dequeue();
+				(name, stream) = _creationQueue.Dequeue();
 			}
 			
 			var fileHandle = new FileHandle
@@ -49,8 +49,9 @@ public class FileRepository(ApplicationDbContext context)
 			
 			var handle = await CreateFileBlocks(stream, fileHandle);
 			var currentFileCount = handle.FileBlocks.Count();
+			handle.FileBlockCount = currentFileCount;
 
-			lock (countLock)
+			lock (_countLock)
 			{
 				var count = context.FileBlocks.Count();
 

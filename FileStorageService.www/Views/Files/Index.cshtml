@@ -7,7 +7,7 @@
 
 <h2>All Files</h2>
 
-<div class="card">
+<div class="card mb-4">
 	<div class="card-body">
 		<h5 class="card-title">Total Storage</h5>
 		<div class="progress">
@@ -21,31 +21,37 @@
 </div>
 
 
-@if (!Model.FileHandles.Any())
-{
-	<p>No files available</p>
-}
-else
-{
-	<table class="table">
-		<thead>
-		<tr>
-			<th scope="col">Name</th>
-			<th scope="col">Block Count</th>
-			<th scope="col">Links</th>
-		</tr>
-		</thead>
-		<tbody>
-		@foreach (var file in Model.FileHandles)
+<div class="card">
+	<div class="card-body">
+		@if (!Model.FileHandles.Any())
 		{
-			<tr>
-				<th scope="row" class="align-middle">@file.FileName</th>
-				<th scope="row" class="align-middle">@file.BlockCount</th>
-				<th scope="row" class="align-middle"><a
-						asp-controller="Files" asp-action="Index" asp-route-id="@file.Id"
-						class="btn btn-primary">View...</a></th>
-			</tr>
+			<p>No files available</p>
+			<a class="btn btn-primary" asp-area="" asp-controller="Files" asp-action="New">New File...</a>
 		}
-		</tbody>
-	</table>
-}
+		else
+		{
+			<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Block Count</th>
+					<th scope="col">Links</th>
+				</tr>
+				</thead>
+				<tbody>
+				@foreach (var file in Model.FileHandles)
+				{
+					<tr>
+						<th scope="row" class="align-middle">@file.FileName</th>
+						<th scope="row" class="align-middle">@file.BlockCount</th>
+						<th scope="row" class="align-middle">
+							<a
+								asp-controller="Files" asp-action="Index" asp-route-id="@file.Id"
+								class="btn btn-primary">View...</a></th>
+					</tr>
+				}
+				</tbody>
+			</table>
+		}
+	</div>
+</div>

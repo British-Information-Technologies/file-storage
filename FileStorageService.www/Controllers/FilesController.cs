@@ -28,7 +28,7 @@ public class FilesController(
 		var handles = fileHandles.Select(e => new FileHandleModel
 			{
 				FileName = e.Name,
-				BlockCount = e.FileBlocks.Count,
+				BlockCount = e.FileBlockCount,
 				Id = e.Id,
 			})
 			.ToList();
@@ -48,7 +48,7 @@ public class FilesController(
 		var model = new FileHandleModel
 		{
 			FileName = fileHandle.Name,
-			BlockCount = fileHandle.FileBlocks.Count,
+			BlockCount = fileHandle.FileBlockCount,
 			Id = fileHandle.Id,
 		};
 

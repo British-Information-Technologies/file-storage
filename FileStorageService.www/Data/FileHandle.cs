@@ -10,4 +10,6 @@ public class FileHandle
 	public required string Name { get; set; }
 
 	public ICollection<FileBlock> FileBlocks { get; } = new List<FileBlock>();
+
+	public int FileBlockCount { get; set; } = 0;
 }
