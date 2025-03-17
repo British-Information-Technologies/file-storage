@@ -22,6 +22,12 @@
 
 
 <div class="card">
+	@if (Model.FileHandles.Any())
+	{
+		<div class="card-header">
+			<a class="btn btn-primary" asp-area="" asp-controller="Files" asp-action="New">New File...</a>
+		</div>
+	}
 	<div class="card-body">
 		@if (!Model.FileHandles.Any())
 		{
