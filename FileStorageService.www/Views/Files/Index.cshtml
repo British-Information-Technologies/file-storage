@@ -7,6 +7,20 @@
 
 <h2>All Files</h2>
 
+<div class="card">
+	<div class="card-body">
+		<h5 class="card-title">Total Storage</h5>
+		<div class="progress">
+			<div
+				class="progress-bar" role="progressbar"
+				style="width: @Model.BlockUsagePercentage%"
+				aria-valuenow="@Model.BlockUsagePercentage" aria-valuemin="0"
+				aria-valuemax="100">@Model.CurrentBlockCount/@Model.AllocatedBlockCount</div>
+		</div>
+	</div>
+</div>
+
+
 @if (!Model.FileHandles.Any())
 {
 	<p>No files available</p>
@@ -22,12 +36,14 @@ else
 		</tr>
 		</thead>
 		<tbody>
-		@foreach(var file in Model.FileHandles)
+		@foreach (var file in Model.FileHandles)
 		{
 			<tr>
 				<th scope="row" class="align-middle">@file.FileName</th>
 				<th scope="row" class="align-middle">@file.BlockCount</th>
-				<th scope="row" class="align-middle"><a asp-controller="Files" asp-action="Index" asp-route-id="@file.Id" class="btn btn-primary">View...</a></th>
+				<th scope="row" class="align-middle"><a
+						asp-controller="Files" asp-action="Index" asp-route-id="@file.Id"
+						class="btn btn-primary">View...</a></th>
 			</tr>
 		}
 		</tbody>
