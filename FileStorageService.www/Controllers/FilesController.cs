@@ -80,7 +80,7 @@ public class FilesController(ApplicationDbContext context) : Controller
 		
 		await context.SaveChangesAsync();
 		
-		return Redirect($"/Files/{handle.Id}");
+		return RedirectToAction("Index", "Files", new{ id = handle.Id});
 	}
 
 	private async Task CreateFileBlocks(FileHandle fileHandle, Stream reader)
