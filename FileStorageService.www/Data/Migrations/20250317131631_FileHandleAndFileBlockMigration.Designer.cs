@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FileStorageService.www.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250317003031_InitialFileModels")]
-    partial class InitialFileModels
+    [Migration("20250317131631_FileHandleAndFileBlockMigration")]
+    partial class FileHandleAndFileBlockMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,7 +63,7 @@ namespace FileStorageService.www.Data.Migrations
             modelBuilder.Entity("FileStorageService.www.Data.FileBlock", b =>
                 {
                     b.HasOne("FileStorageService.www.Data.FileHandle", "FileHandle")
-                        .WithMany("Blocks")
+                        .WithMany("FileBlocks")
                         .HasForeignKey("FileHandleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -73,7 +73,7 @@ namespace FileStorageService.www.Data.Migrations
 
             modelBuilder.Entity("FileStorageService.www.Data.FileHandle", b =>
                 {
-                    b.Navigation("Blocks");
+                    b.Navigation("FileBlocks");
                 });
 #pragma warning restore 612, 618
         }

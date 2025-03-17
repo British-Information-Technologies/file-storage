@@ -1,0 +1,20 @@
+@model NewFileModel
+
+@{
+	ViewBag.Title = "title";
+	Layout = "_Layout";
+}
+
+<h2>New File</h2>
+
+<form asp-controller="Files" asp-action="New" method="post" enctype="multipart/form-data">
+	<div class="mb-3">
+		<label asp-for="Name">Name</label>
+		<input asp-for="Name">
+	</div>
+	<div class="mb-3">
+		<label asp-for="FileContents">File</label>
+		<input asp-for="FileContents">
+	</div>
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>

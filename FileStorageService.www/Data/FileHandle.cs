@@ -2,12 +2,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FileStorageService.www.Data;
 
-public class FileHandle(string name)
+public class FileHandle
 {
-	public Guid Id { get; set; }
+	public Guid Id { get; init; }
 	
 	[MaxLength(64)]
-	public string Name { get; set; } = name;
+	public required string Name { get; set; }
 
-	public ICollection<FileBlock> Blocks { get; } = [];
+	public ICollection<FileBlock> FileBlocks { get; } = new List<FileBlock>();
 }

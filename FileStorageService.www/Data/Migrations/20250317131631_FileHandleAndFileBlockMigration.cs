@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FileStorageService.www.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialFileModels : Migration
+    public partial class FileHandleAndFileBlockMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

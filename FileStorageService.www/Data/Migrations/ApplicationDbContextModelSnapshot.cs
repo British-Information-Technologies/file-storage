@@ -60,7 +60,7 @@ namespace FileStorageService.www.Data.Migrations
             modelBuilder.Entity("FileStorageService.www.Data.FileBlock", b =>
                 {
                     b.HasOne("FileStorageService.www.Data.FileHandle", "FileHandle")
-                        .WithMany("Blocks")
+                        .WithMany("FileBlocks")
                         .HasForeignKey("FileHandleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -70,7 +70,7 @@ namespace FileStorageService.www.Data.Migrations
 
             modelBuilder.Entity("FileStorageService.www.Data.FileHandle", b =>
                 {
-                    b.Navigation("Blocks");
+                    b.Navigation("FileBlocks");
                 });
 #pragma warning restore 612, 618
         }

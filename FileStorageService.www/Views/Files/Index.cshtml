@@ -1,0 +1,35 @@
+@model FileHandleListModel
+
+@{
+	ViewData["Title"] = "Files";
+	Layout = "_Layout";
+}
+
+<h2>All Files</h2>
+
+@if (!Model.FileHandles.Any())
+{
+	<p>No files available</p>
+}
+else
+{
+	<table class="table">
+		<thead>
+		<tr>
+			<th scope="col">Name</th>
+			<th scope="col">Block Count</th>
+			<th scope="col">Links</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach(var file in Model.FileHandles)
+		{
+			<tr>
+				<th scope="row">@file.FileName</th>
+				<th scope="row">@file.BlockCount</th>
+				<th scope="row"><a asp-controller="Files" asp-action="Index" asp-route-id="@file.Id">View...</a></th>
+			</tr>
+		}
+		</tbody>
+	</table>
+}

@@ -16,4 +16,5 @@ public class FileBlock
 	public required byte[] Data { get; init; }
 	
 	public required FileHandle FileHandle { get; init; }
+	
 }
