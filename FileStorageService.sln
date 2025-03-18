@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorageService.www", "FileStorageService.www\FileStorageService.www.csproj", "{BC0E09F5-B6B3-469D-B4D3-C343EF04CAAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorageService.www.Test", "FileStorageService.www.Test\FileStorageService.www.Test.csproj", "{1B6E48A3-AF16-4541-A7AA-AA13862A10A8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BC0E09F5-B6B3-469D-B4D3-C343EF04CAAF} = {BC0E09F5-B6B3-469D-B4D3-C343EF04CAAF}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +17,9 @@ Global
 		{BC0E09F5-B6B3-469D-B4D3-C343EF04CAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC0E09F5-B6B3-469D-B4D3-C343EF04CAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC0E09F5-B6B3-469D-B4D3-C343EF04CAAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6E48A3-AF16-4541-A7AA-AA13862A10A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6E48A3-AF16-4541-A7AA-AA13862A10A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6E48A3-AF16-4541-A7AA-AA13862A10A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6E48A3-AF16-4541-A7AA-AA13862A10A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
