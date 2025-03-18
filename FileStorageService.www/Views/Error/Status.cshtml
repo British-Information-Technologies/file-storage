@@ -1,0 +1,25 @@
+@model int
+
+@{
+	ViewBag.Title = $"Status - {Model}";
+	Layout = "_Layout";
+}
+
+<div class="text-center">
+	<h2>Sorry - Status @Model</h2>
+	@switch (Model)
+	{
+		case 404:
+			<p>Sorry it looks like the resource you clicked on, doesn't exist...</p>
+			<p>Which is strange, unless you created the link yourself</p>
+			<p>If you clicked a link, my apologies</p>
+			<p>If you copied the link, make sure it is correct.</p>
+			break;
+		default:
+			<p>Sorry I hadn't planned for this error occuring...</p>
+			<p>Which I agree, is rather awkward.</p>
+			break;
+	}
+	<p>here's a complementary link back to files</p>
+	<a asp-controller="Files" asp-action="Index" class="btn btn-primary">Go back to Files</a>
+</div>
