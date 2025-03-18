@@ -53,7 +53,11 @@
 						<th scope="row" class="align-middle">
 							<a
 								asp-controller="Files" asp-action="Index" asp-route-id="@file.Id"
-								class="btn btn-primary">View...</a></th>
+								class="btn btn-primary me-2">View...</a>
+							<a
+								asp-controller="Files" asp-action="ConfirmDelete" asp-route-id="@file.Id"
+								class="btn btn-danger">Delete...</a>
+							</th>
 					</tr>
 				}
 				</tbody>

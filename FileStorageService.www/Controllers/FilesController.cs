@@ -1,16 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
 using FileStorageService.www.Atttributes;
-using FileStorageService.www.Data;
 using FileStorageService.www.Models;
 using FileStorageService.www.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Framework;
-using Microsoft.EntityFrameworkCore;
 
 namespace FileStorageService.www.Controllers;
 
 public class FilesController(
-	ApplicationDbContext context,
 	FileRepository fileRepository) : Controller
 {
 	private const long MaxFileSize = 7L * 1024L * 1024L * 1024L;
@@ -90,5 +85,33 @@ public class FilesController(
 	{
 		return View();
 	}
+
+	public async Task<IActionResult> ConfirmDelete(Guid id)
+	{
+		
+		var handle = await fileRepository.GetFileHandle(id);
+
+		var model = new FileHandleDeleteModel()
+		{
+			Id = handle.Id,
+			FileName = handle.Name,
+			BlockCount = handle.FileBlockCount,
+		};
+		
+		return View(model);
+	}
 	
+	[HttpPost]
+	public async Task<IActionResult> Delete(FileHandleDeleteModel model)
+	{
+		if (!ModelState.IsValid)
+			return RedirectToAction("ConfirmDelete", new {id = model.Id});
+
+		if (model.ConfirmFileName != model.FileName)
+			return RedirectToAction("ConfirmDelete", new {id = model.Id});
+
+		await fileRepository.DeleteFileHandle(model.Id);
+		
+		return RedirectToAction("Index");
+	}
 }

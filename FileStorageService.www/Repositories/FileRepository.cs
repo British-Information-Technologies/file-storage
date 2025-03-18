@@ -1,4 +1,5 @@
 using FileStorageService.www.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileStorageService.www.Repositories;
@@ -90,5 +91,21 @@ public class FileRepository(ApplicationDbContext context)
 		}
 
 		return fileHandle;
+	}
+
+	public async Task<FileHandle> GetFileHandle(Guid id)
+	{
+		return await context.FileHandles.FirstAsync(f => f.Id == id);
+	}
+
+	public async Task DeleteFileHandle(Guid id)
+	{
+		var handle = await context.FileHandles
+			.Include(f => f.FileBlocks)
+			.FirstAsync(f => f.Id == id);
+		
+		context.FileHandles.Remove(handle);
+
+		await context.SaveChangesAsync();
 	}
 }

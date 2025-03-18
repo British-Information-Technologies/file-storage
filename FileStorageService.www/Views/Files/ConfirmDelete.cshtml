@@ -1,0 +1,20 @@
+@model FileHandleDeleteModel
+
+@{
+	ViewBag.Title = "title";
+	Layout = "_Layout";
+}
+
+<h2>Delete - @Model.FileName </h2>
+
+<form asp-action="Delete" method="post">
+	<input asp-for="Id" type="hidden" />
+	<input asp-for="FileName" type="hidden"/>
+	
+	<p>Are you sure you want this file to be deleted?</p>
+
+	<p>If so, please enter file name here to continue</p>
+	
+	<input asp-for="ConfirmFileName"/>
+	<input type="submit" class="btn btn-danger"/>
+</form>
