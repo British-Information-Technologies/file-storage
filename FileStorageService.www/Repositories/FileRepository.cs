@@ -84,7 +84,7 @@ public class FileRepository(ApplicationDbContext context)
 			var block = new FileBlock
 			{
 				BlockNumber = blockNumber++,
-				Data = buffer,
+				Data = buffer.ToArray(),
 				FileHandle = fileHandle
 			};
 			fileHandle.FileBlocks.Add(block);
