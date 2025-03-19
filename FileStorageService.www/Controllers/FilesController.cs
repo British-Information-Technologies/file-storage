@@ -114,4 +114,14 @@ public class FilesController(
 		
 		return RedirectToAction("Index");
 	}
+
+	public async Task<IActionResult> Download(Guid id)
+	{
+
+		var filename = await fileRepository.GetFileName(id);
+		
+		var stream = fileRepository.EnumerateFileContentsAsync(id);
+		
+		return File(stream, "application/octet-stream", filename);
+	}
 }

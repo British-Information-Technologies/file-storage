@@ -55,6 +55,9 @@
 								asp-controller="Files" asp-action="Index" asp-route-id="@file.Id"
 								class="btn btn-primary me-2">View...</a>
 							<a
+								asp-controller="Files" asp-action="Download" asp-route-id="@file.Id"
+								class="btn btn-success me-2">Download</a>
+							<a
 								asp-controller="Files" asp-action="ConfirmDelete" asp-route-id="@file.Id"
 								class="btn btn-danger">Delete...</a>
 							</th>
