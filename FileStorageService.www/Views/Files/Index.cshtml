@@ -41,7 +41,7 @@
 				<tr>
 					<th scope="col">Name</th>
 					<th scope="col">Block Count</th>
-					<th scope="col">Links</th>
+					<th scope="col" class="col-4">Links</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -50,7 +50,7 @@
 					<tr>
 						<th scope="row" class="align-middle">@file.FileName</th>
 						<th scope="row" class="align-middle">@file.BlockCount</th>
-						<th scope="row" class="align-middle">
+						<th scope="row" class="align-middle col-4">
 							<a
 								asp-controller="Files" asp-action="Index" asp-route-id="@file.Id"
 								class="btn btn-primary me-2">View...</a>
