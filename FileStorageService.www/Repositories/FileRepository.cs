@@ -14,14 +14,14 @@ public class FileRepository(ApplicationDbContext context)
 	
 	public async Task<List<FileHandle>> GetAllFilesAsync()
 	{
-		return await context.FileHandles
-			.Include(e => e.FileBlocks).ToListAsync();
+		return await context.FileHandles.ToListAsync();
 	}
 	
 	public async Task<FileHandle> GetFileAsync(Guid id)
 	{
-		return await context.FileHandles
-			.Include(e => e.FileBlocks).FirstAsync();
+		return await (from handle in context.FileHandles
+				where handle.Id == id
+				select handle).FirstAsync();
 	}
 	
 	public Task<string> GetFileName(Guid id)
